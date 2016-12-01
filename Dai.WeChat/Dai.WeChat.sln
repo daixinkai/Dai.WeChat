@@ -9,6 +9,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NETCore", "NETCore", "{1F86
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NET45", "NET45", "{FA16104E-2643-4D18-B252-5919CE13F2A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestWebs", "TestWebs", "{B2AAC905-3D6F-46E1-BC87-EB598EB84769}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B3506CF9-DC72-4DC3-9E0C-8EF01E304A2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dai.WeChat.TestWeb", "Dai.WeChat.TestWeb\Dai.WeChat.TestWeb.csproj", "{A9FBC3B9-1F73-4D29-8F24-3FCB724AA5ED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,11 +25,16 @@ Global
 		{3C61B3AF-F4E0-480A-982C-B74C47A8F6A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C61B3AF-F4E0-480A-982C-B74C47A8F6A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C61B3AF-F4E0-480A-982C-B74C47A8F6A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9FBC3B9-1F73-4D29-8F24-3FCB724AA5ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9FBC3B9-1F73-4D29-8F24-3FCB724AA5ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9FBC3B9-1F73-4D29-8F24-3FCB724AA5ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9FBC3B9-1F73-4D29-8F24-3FCB724AA5ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{3C61B3AF-F4E0-480A-982C-B74C47A8F6A1} = {FA16104E-2643-4D18-B252-5919CE13F2A5}
+		{A9FBC3B9-1F73-4D29-8F24-3FCB724AA5ED} = {B2AAC905-3D6F-46E1-BC87-EB598EB84769}
 	EndGlobalSection
 EndGlobal
