@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dai.WeChat.Request
 {
-    public class EventRequestMessage : RequestMessageBase
+    public class RequestEventMessage : RequestMessageBase
     {
         public override MessageType MsgType
         {

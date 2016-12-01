@@ -49,6 +49,7 @@
     <Compile Include="Core\IRespond.cs" />
     <Compile Include="Core\IWeChatButton.cs" />
     <Compile Include="Core\MessageBase.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestTextMessage.cs" />
     <Compile Include="WeChatHelper.cs" />
     <Compile Include="Core\WeChatRespondBase.cs" />
     <Compile Include="Enums\ButtonType.cs" />
@@ -56,7 +57,7 @@
     <Compile Include="Enums\EventType.cs" />
     <Compile Include="Enums\Lang.cs" />
     <Compile Include="Enums\MessageType.cs" />
-    <Compile Include="Messages\RequestMessages\EventMessages\EventRequestMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestEventMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\NormalRequestMessageBase.cs" />
     <Compile Include="Messages\RequestMessages\RequestMessageBase.cs" />
     <Compile Include="Messages\ResponseMessages\ResponseMessageBase.cs" />

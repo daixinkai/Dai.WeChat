@@ -45,5 +45,24 @@ namespace Dai.WeChat
         }
 
         #endregion
+
+
+        #region Internal
+
+        /// <summary>
+        /// 将字符串转换为指定枚举
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="strValue"></param>
+        /// <returns></returns>
+
+        internal static T ToEnum<T>(string strValue) where T : struct
+        {
+            T t = default(T);
+            return Enum.TryParse<T>(strValue, true, out t) ? t : default(T);
+        }
+
+        #endregion
+
     }
 }

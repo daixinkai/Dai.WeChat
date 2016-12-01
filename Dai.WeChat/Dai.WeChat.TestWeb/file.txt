@@ -1,0 +1,2 @@
+2016-12-01 15:41:57.1869|DEBUG|Dai.WeChat.TestWeb.Models.LogHelper|123
+2016-12-01 15:41:59.9481|DEBUG|Dai.WeChat.TestWeb.Models.LogHelper|123

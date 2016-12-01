@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dai.WeChat.TestWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,6 +12,7 @@ namespace Dai.WeChat.TestWeb.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            //var test = WeChatHelper.ToEnum<MessageType>("text");
             return Content("ok");
         }
     }
