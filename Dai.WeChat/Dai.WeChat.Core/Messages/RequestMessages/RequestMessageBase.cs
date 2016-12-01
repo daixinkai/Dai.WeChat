@@ -14,6 +14,12 @@ namespace Dai.WeChat.Request
     /// </summary>
     public abstract class RequestMessageBase : MessageBase
     {
+
+        /// <summary>
+        /// 获取或设置加密解密消息提供者
+        /// </summary>
+        internal IEncodingAESKeyProvider EncodingAESKeyProvider { get; set; }
+
         /// <summary>
         /// 获取或设置接收的XML数据
         /// </summary>
@@ -37,7 +43,8 @@ namespace Dai.WeChat.Request
             {
                 FromUserName = this.ToUserName,
                 ToUserName = this.FromUserName,
-                CreateTime = this.CreateTime
+                CreateTime = this.CreateTime,
+                EncodingAESKeyProvider = EncodingAESKeyProvider
             };
         }
 
@@ -48,7 +55,7 @@ namespace Dai.WeChat.Request
         /// </summary>
         /// <param name="xmlStream"></param>
         /// <returns></returns>
-        public static RequestMessageBase GetInstance(Stream xmlStream)
+        public static RequestMessageBase GetInstance(Stream xmlStream, IEncodingAESKeyProvider encodingAESKeyProvider)
         {
             if (xmlStream == null || xmlStream.Length == 0)
             {
@@ -62,9 +69,31 @@ namespace Dai.WeChat.Request
 
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlStream);
-            return GetInstance(doc);
-
+            return GetInstance(doc, encodingAESKeyProvider);
         }
+
+        /// <summary>
+        /// 得到具体的消息处理实例
+        /// </summary>
+        /// <param name="xmlStream"></param>
+        /// <returns></returns>
+        public static RequestMessageBase GetInstance(Stream xmlStream)
+        {
+            return GetInstance(xmlStream, null);
+        }
+
+        /// <summary>
+        /// 得到具体的消息处理实例
+        /// </summary>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static RequestMessageBase GetInstance(string xml, IEncodingAESKeyProvider encodingAESKeyProvider)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            return GetInstance(doc, encodingAESKeyProvider);
+        }
+
         /// <summary>
         /// 得到具体的消息处理实例
         /// </summary>
@@ -72,12 +101,77 @@ namespace Dai.WeChat.Request
         /// <returns></returns>
         public static RequestMessageBase GetInstance(string xml)
         {
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-            return GetInstance(doc);
+            return GetInstance(xml, null);
         }
 
-        static RequestMessageBase GetInstance(XmlDocument doc)
+        static RequestMessageBase GetInstance(XmlDocument doc, IEncodingAESKeyProvider encodingAESKeyProvider)
+        {
+            RequestMessageBase message = null;
+            try
+            {
+                XmlNode firstNode = doc.FirstChild;
+                if (firstNode == null)
+                {
+                    return null;
+                }
+
+                var encryptNode = firstNode.SelectSingleNode("Encrypt");
+
+                if (encryptNode != null)
+                {
+                    return GetEncodingInstance(encryptNode.InnerText, encodingAESKeyProvider);
+                }
+
+                //消息类型
+                XmlNode tempNode = firstNode.SelectSingleNode("MsgType");
+                if (tempNode == null)
+                {
+                    return null;
+                }
+                message = GetInstance(WeChatHelper.ToEnum<MessageType>(tempNode.InnerText));
+                if (message != null)
+                {
+                    message.Node = firstNode;
+                    //发送者
+                    tempNode = firstNode.SelectSingleNode("FromUserName");
+                    if (tempNode == null)
+                    {
+                        return null;
+                    }
+                    message.FromUserName = tempNode.InnerText;
+                    //接收者
+                    tempNode = firstNode.SelectSingleNode("ToUserName");
+                    if (tempNode == null)
+                    {
+                        return null;
+                    }
+                    message.ToUserName = tempNode.InnerText;
+                    //创建时间
+                    tempNode = firstNode.SelectSingleNode("CreateTime");
+                    if (tempNode == null)
+                    {
+                        return null;
+                    }
+                    message.CreateTime = Convert.ToInt64(tempNode.InnerText);
+                    return message.Parse();
+                }
+                return message;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
+
+        static RequestMessageBase GetEncodingInstance(string encryptXml, IEncodingAESKeyProvider encodingAESKeyProvider)
+        {
+            string xml = encodingAESKeyProvider.Decrypt(encryptXml);
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(xml);
+            return GetEncodingInstance(doc, encodingAESKeyProvider);
+        }
+        static RequestMessageBase GetEncodingInstance(XmlDocument doc, IEncodingAESKeyProvider encodingAESKeyProvider)
         {
             RequestMessageBase message = null;
             try
@@ -97,6 +191,7 @@ namespace Dai.WeChat.Request
                 if (message != null)
                 {
                     message.Node = firstNode;
+                    message.EncodingAESKeyProvider = encodingAESKeyProvider;
                     //发送者
                     tempNode = firstNode.SelectSingleNode("FromUserName");
                     if (tempNode == null)

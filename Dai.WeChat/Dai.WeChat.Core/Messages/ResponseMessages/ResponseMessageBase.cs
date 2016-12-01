@@ -11,6 +11,10 @@ namespace Dai.WeChat.Response
     /// </summary>
     public abstract class ResponseMessageBase : MessageBase, IRespond
     {
+        /// <summary>
+        /// 获取或设置加密解密消息提供者
+        /// </summary>
+        public IEncodingAESKeyProvider EncodingAESKeyProvider { get; set; }
         public abstract string GetResponse();
     }
 }

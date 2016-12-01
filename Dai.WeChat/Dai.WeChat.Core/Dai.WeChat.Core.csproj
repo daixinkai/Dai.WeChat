@@ -49,6 +49,8 @@
     <Compile Include="Core\IRespond.cs" />
     <Compile Include="Core\IWeChatButton.cs" />
     <Compile Include="Core\MessageBase.cs" />
+    <Compile Include="EncodingAESKey\DefaultEncodingAESKeyProvider.cs" />
+    <Compile Include="EncodingAESKey\IEncodingAESKeyProvider.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestTextMessage.cs" />
     <Compile Include="WeChatHelper.cs" />
     <Compile Include="Core\WeChatRespondBase.cs" />

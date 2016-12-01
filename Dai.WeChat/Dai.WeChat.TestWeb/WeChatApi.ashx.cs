@@ -41,6 +41,9 @@ namespace Dai.WeChat.TestWeb
             XmlDocument xml = new XmlDocument();
 
             xml.Load(context.Request.InputStream);
+
+            LogHelper.Debug(context.Request.QueryString.ToString());
+
             LogHelper.Debug(xml.InnerXml);
             return;
             if (xml.FirstChild == null)
