@@ -32,11 +32,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -49,6 +49,7 @@
     <Compile Include="Core\IRespond.cs" />
     <Compile Include="Core\IWeChatButton.cs" />
     <Compile Include="Core\MessageBase.cs" />
+    <Compile Include="WeChatHelper.cs" />
     <Compile Include="Core\WeChatRespondBase.cs" />
     <Compile Include="Enums\ButtonType.cs" />
     <Compile Include="Enums\Errcode.cs" />
