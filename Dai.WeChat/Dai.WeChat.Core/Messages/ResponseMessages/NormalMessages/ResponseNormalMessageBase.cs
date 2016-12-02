@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dai.WeChat.Request
+namespace Dai.WeChat.Response
 {
-    public abstract class NormalRequestMessageBase : RequestMessageBase
+    public abstract class ResponseNormalMessageBase : ResponseMessageBase
     {
         /// <summary>
         /// 消息id，64位整型

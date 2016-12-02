@@ -18,25 +18,63 @@ namespace Dai.WeChat.TestWeb
 
         public void ProcessRequest(HttpContext context)
         {
-            //LogHelper.Debug(context.Request.InputStream.Length.ToString());
-            //LogHelper.Debug(context.Request.QueryString.ToString() + "\r\n" + context.Request.Form.ToString());
 
-            //
+            //LogBody(context);
+            string sToken = "daixinkai";
+            string sEncodingAESKey = "gGnOmL5YyOlkAAcLhbogPU2wmLeboUzYlnTDwZ0231t";
 
+            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sToken, sEncodingAESKey, context.Request.QueryString);
 
             if (context.Request.InputStream == null)
             {
-                context.EchoPass();
+
+                if (string.IsNullOrEmpty(encodingAESKeyProvider.MsgSignature))
+                {
+                    context.EchoPass();
+                    return;
+                }
+                context.EchoPass(encodingAESKeyProvider.GetEchoString(context.Request["echostr"]));
                 return;
             }
 
-            var requestMessage = RequestMessageBase.GetInstance(context.Request.InputStream);
+
+
+            var requestMessage = RequestMessageBase.GetInstance(context.Request.InputStream, encodingAESKeyProvider);
 
             if (requestMessage == null)
             {
                 LogHelper.Debug("requestMessage=null");
+                LogBody(context);
+                return;
             }
 
+            try
+            {
+                var response = DirectiveCenter.GetResponse(requestMessage).GetResponse();
+
+                LogHelper.Debug(response);
+
+                context.Response.Write(response);
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error(ex.ToString());
+            }
+
+            //context.Request.InputStream.Position = 0;
+            //XmlDocument xml = new XmlDocument();
+
+            //xml.Load(context.Request.InputStream);
+
+            //LogHelper.Debug(context.Request.QueryString.ToString());
+
+            //LogHelper.Debug(xml.InnerXml);
+
+        }
+
+
+        void LogBody(HttpContext context)
+        {
             context.Request.InputStream.Position = 0;
             XmlDocument xml = new XmlDocument();
 
@@ -45,42 +83,7 @@ namespace Dai.WeChat.TestWeb
             LogHelper.Debug(context.Request.QueryString.ToString());
 
             LogHelper.Debug(xml.InnerXml);
-            return;
-            if (xml.FirstChild == null)
-            {
-                LogHelper.Debug("xml.FirstChild=null");
-            }
-            else
-            {
-                LogHelper.Debug(xml.FirstChild.InnerXml);
-                XmlNode tempNode = xml.FirstChild.SelectSingleNode("MsgType");
-                LogHelper.Debug(tempNode.InnerText);
-                //LogHelper.Debug(WeChatHelper.ToEnum<MessageType>(tempNode.InnerText).ToString());
-            }
-            LogHelper.Debug(xml.InnerXml);
-
-            try
-            {
-                LogHelper.Debug(requestMessage.ToString());
-            }
-            catch (Exception ex)
-            {
-                LogHelper.Error(ex.ToString());
-            }
-
-            //XmlDocument xml = new XmlDocument();
-
-            //xml.Load(context.Request.InputStream);
-
-            ////var buffer = new byte[context.Request.InputStream.Length];
-
-            ////context.Request.InputStream.Read(buffer, 0, buffer.Length);
-
-            ////string xml = Encoding.UTF8.GetString(buffer);
-
-            ////LogHelper.Debug(xml.FirstChild.InnerText);
-
-            //LogHelper.Debug(xml.InnerXml);
+            context.Request.InputStream.Position = 0;
         }
 
         public bool IsReusable

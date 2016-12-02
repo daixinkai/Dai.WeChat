@@ -31,7 +31,7 @@ namespace Dai.WeChat
         /// <summary>
         /// 消息创建时间 （整型）
         /// </summary>
-        public long CreateTime { get; set; }
+        public virtual long CreateTime { get; set; }
         /// <summary>
         /// 表示消息类型
         /// </summary>

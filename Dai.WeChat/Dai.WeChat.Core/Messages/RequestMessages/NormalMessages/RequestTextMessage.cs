@@ -10,7 +10,7 @@ namespace Dai.WeChat.Request
     /// <summary>
     /// 表示一个文本消息,可以用于回复
     /// </summary>
-    public class RequestTextMessage : NormalRequestMessageBase
+    public class RequestTextMessage : RequestNormalMessageBase
     {
         public override MessageType MsgType
         {

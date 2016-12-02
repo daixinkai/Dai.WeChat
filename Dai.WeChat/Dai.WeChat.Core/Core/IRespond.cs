@@ -16,5 +16,11 @@ namespace Dai.WeChat
         /// </summary>
         /// <returns></returns>
         string GetResponse();
+
+        /// <summary>
+        /// 得到加密响应内容
+        /// </summary>
+        /// <returns></returns>
+        string GetResponse(IEncodingKeyProvider encodingKeyProvider);
     }
 }

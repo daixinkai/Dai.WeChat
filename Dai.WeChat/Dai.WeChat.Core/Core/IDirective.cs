@@ -12,6 +12,9 @@ namespace Dai.WeChat
     /// </summary>
     public interface IDirective
     {
+
+        int Order { get; }
+
         /// <summary>
         /// 检查指令是否与消息相匹配
         /// </summary>

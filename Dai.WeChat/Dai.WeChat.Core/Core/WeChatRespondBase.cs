@@ -12,5 +12,10 @@ namespace Dai.WeChat
         {
             throw new NotImplementedException();
         }
+
+        public string GetResponse(IEncodingKeyProvider encodingKeyProvider)
+        {
+            return encodingKeyProvider.Encrypt(GetResponse());
+        }
     }
 }

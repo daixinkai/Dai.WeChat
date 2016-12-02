@@ -43,15 +43,23 @@
     <Compile Include="Api\WeChatApiExpireResponse.cs" />
     <Compile Include="Api\WeChatApiResponse.cs" />
     <Compile Include="Api\WeChatApiTicketResponse.cs" />
+    <Compile Include="Attributes\IgnoreDirectiveAttribute.cs" />
     <Compile Include="Core\CustomMenu.cs" />
+    <Compile Include="Core\DirectiveCenter.cs" />
     <Compile Include="Core\IDirective.cs" />
     <Compile Include="Core\IMessage.cs" />
     <Compile Include="Core\IRespond.cs" />
     <Compile Include="Core\IWeChatButton.cs" />
     <Compile Include="Core\MessageBase.cs" />
-    <Compile Include="EncodingAESKey\DefaultEncodingAESKeyProvider.cs" />
-    <Compile Include="EncodingAESKey\IEncodingAESKeyProvider.cs" />
+    <Compile Include="Directives\TestDirective.cs" />
+    <Compile Include="EncodingKey\Cryptography.cs" />
+    <Compile Include="EncodingKey\DefaultEncodingAESKeyProvider.cs" />
+    <Compile Include="EncodingKey\IEncodingKeyProvider.cs" />
+    <Compile Include="EncodingKey\WXBizMsgCrypt.cs" />
+    <Compile Include="Extensions\EncodingKeyProviderExtensions.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestTextMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseNormalMessageBase.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseTextMessage.cs" />
     <Compile Include="WeChatHelper.cs" />
     <Compile Include="Core\WeChatRespondBase.cs" />
     <Compile Include="Enums\ButtonType.cs" />
@@ -60,14 +68,12 @@
     <Compile Include="Enums\Lang.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestEventMessage.cs" />
-    <Compile Include="Messages\RequestMessages\NormalMessages\NormalRequestMessageBase.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestNormalMessageBase.cs" />
     <Compile Include="Messages\RequestMessages\RequestMessageBase.cs" />
     <Compile Include="Messages\ResponseMessages\ResponseMessageBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Attributes\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

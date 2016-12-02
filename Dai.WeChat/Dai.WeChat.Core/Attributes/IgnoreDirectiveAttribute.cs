@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 namespace Dai.WeChat
 {
     /// <summary>
-    /// 提供EncodingAESKey加密解密操作
+    /// 一个特性,表示忽略的指令
     /// </summary>
-    public interface IEncodingAESKeyProvider
+    [AttributeUsage(AttributeTargets.Class, Inherited = false, AllowMultiple = false)]
+    public sealed class IgnoreDirectiveAttribute : Attribute
     {
-        string Encrypt(string value);
-
-        string Decrypt(string value);
     }
 }

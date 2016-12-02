@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dai.WeChat.Request;
+using System.Collections.Specialized;
 
 namespace Dai.WeChat.Tests
 {
@@ -10,11 +11,28 @@ namespace Dai.WeChat.Tests
         [TestMethod]
         public void TestMethod1()
         {
-            string xml = @"<xml><ToUserName><![CDATA[wx2b39b54549e3dfd3]]></ToUserName><Encrypt><![CDATA[HoZSSc2tQvV+w9hY+OZwiAVUgU8I54lxbi+cTLKO07nsTbkf9xpq4vsQbN4rl9+1qfXml3hIBrt23m3D6CLFqXwFKQ+oq1TeCj+7/z/weoBUUuIYJqU9ZYkPnWgqOKqwiroBZu8/MdEp/5wa6zTSL3Ng/yJVRM8Ctk7EENl6phBXkOewxun69g+Wmi6xtbK02ECl8iGdz/bq9UnPEFRr5CuiJJc5WTZpldQkmzSrRF9HdKYpzF+MsY78w5UDBLSDTn4Ep8d6Z3Iu762RWp9RMhnBvfAyIeR7z155+VCYBB2AjgVqxmRkWZvcp0vLWUeJzm6zd/hTl+FVrJECDPbaUzIbRPzj00bt6e8VCtRJ/YI1587UxybAm6ReVk4SXaDIc71cspy6Mto3kSBqMmVt6ZtVgYdfzT2H6YtUnaNLC8o0PKF7RXwj4ZrJu9nl5TWTh2nMdKhfIPHm4uD8Oe0+4Q==]]></Encrypt></xml>";
+            string xml = @"<xml><ToUserName><![CDATA[wxb43ab71368baff54]]></ToUserName><Encrypt><![CDATA[2s12P2bDaKRD0sP+tb7j2wAfeQDCpqS8JdLV2HPgd0SRekMk9Zee0R11AV5XEBXcKCQa1aH9nxrnk7GiBhLQ22cm5SYrBDWlWdNGaJBvHkZABszXKoVp7ZJPEc54ayQKWwwy7a0SWXJmNp+9QIVPr7CS95xnsfs0O6yqpO2lPSkfiS0HqHC7Yq1vk5uFccNcFkI34Tx0kQcUiRUcbbsuy/AJ8ilSZhZgnzVeLre/oNNEcuKffabv6FCzzsbyJtyIDAollbkCk1AhxYJrdBNn2HJSOd/y2t9R3hVpJJqbi22X/oPgN9hiSPwT9+cNx9Mxcpl7rA4iitGHPcNJfkN2K6ghNM19/xq5xMFH50ivlerK0AtOObXsayTBxq1cLBzXMRfSRFcbzwDo1fB+xmAriObfRAkYTPfb7dxAi2Zw5fSUTs0tyvFrTHPIBXzpXBCAmQLuVs8pJZEqQEWSPWRykqPlhPAJkPDB6WADaF/0xRcmjaAon7L/S8lXssDm1IKy]]></Encrypt></xml>";
 
-            string queryString = "signature=0bf3272848b0e5aa06f7a8790ee4bfe270eee57a&timestamp=1480586740&nonce=1743926060&encrypt_type=aes&msg_signature=0d085c3c418ebd0079f21617c3e64904083d85c2";
+            string queryString = "signature=e2d7a4d5fc02ae9ccb34133a94709c932467aa79&timestamp=1480667966&nonce=431731761&encrypt_type=aes&msg_signature=4745eb93d065c3937f3f23bf450a7ad0a06899df";
 
-            RequestMessageBase.GetInstance(xml);
+
+            //RequestMessageBase.GetInstance(xml);
+
+
+            var msg_signature = "4745eb93d065c3937f3f23bf450a7ad0a06899df";
+            var timestamp = "1480667966";
+            var nonce = "431731761";
+            string sToken = "daixinkai";
+            string appId = "wxb43ab71368baff54";
+            string sEncodingAESKey = "gGnOmL5YyOlkAAcLhbogPU2wmLeboUzYlnTDwZ0231t";
+
+            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sToken, sEncodingAESKey, msg_signature, timestamp, nonce);
+
+            //encodingAESKeyProvider.AppId = appId;
+
+            var instance = RequestMessageBase.GetInstance(xml, encodingAESKeyProvider);
+
+            var value = encodingAESKeyProvider.Decrypt(xml);
 
         }
     }
