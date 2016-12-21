@@ -28,6 +28,10 @@
         /// <summary>
         /// 表示页面跳转事件
         /// </summary>
-        View
+        View,
+        /// <summary>
+        /// 模板消息发送结束
+        /// </summary>
+        TEMPLATESENDJOBFINISH
     }
 }

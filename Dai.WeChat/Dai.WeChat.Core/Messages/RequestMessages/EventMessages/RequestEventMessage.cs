@@ -107,6 +107,9 @@ namespace Dai.WeChat.Request
                     //是取消关注事件
                     message = this.Copy<RequestSubscribeEventMessage>();
                     break;
+                case EventType.TEMPLATESENDJOBFINISH:
+                    message = new RequestTemplateSendJobFinishMessage(this, node.GetInnerText("Status"));
+                    break;
                 default:
                     message = this;
                     break;

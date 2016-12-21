@@ -9,11 +9,7 @@ namespace Dai.WeChat.Request
     /// <summary>
     /// 表示普通的消息
     /// </summary>
-    public abstract class RequestNormalMessageBase : RequestMessageBase
+    public abstract class RequestNormalMessageBase : RequestMsgIdMessageBase
     {
-        /// <summary>
-        /// 消息id，64位整型
-        /// </summary>
-        public string MsgId { get; set; }
     }
 }

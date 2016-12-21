@@ -23,6 +23,22 @@ namespace Dai.WeChat.TestWeb.Directives
 
             var requestTextMessage = requestMessage as RequestTextMessage;
 
+            if (requestTextMessage.Content == "新闻")
+            {
+                var newsResponseMessage = requestTextMessage.ToResponseMessage<ResponseNewsMessage>();
+
+                newsResponseMessage.Articles.Add(new NewsMessageItem()
+                {
+                    Description = "马化腾回忆创业:曾假扮女孩子陪聊",
+                    PicUrl = "http://daixinkai.cn/file/image/A015B5EB46EDDD4405831D720810CC55.jpg",
+                    Title = "马化腾回忆创业:....",
+                    Url = "http://tech.163.com/15/0601/07/AR0O2L7200094OE0.html"
+                });
+
+                return newsResponseMessage;
+            }
+
+
             var response = requestMessage.ToResponseMessage<ResponseTextMessage>();
 
             response.MsgId = requestTextMessage.MsgId;

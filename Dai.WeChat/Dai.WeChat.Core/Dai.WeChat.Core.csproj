@@ -56,11 +56,13 @@
     <Compile Include="EncodingKey\DefaultEncodingAESKeyProvider.cs" />
     <Compile Include="EncodingKey\IEncodingKeyProvider.cs" />
     <Compile Include="EncodingKey\WXBizMsgCrypt.cs" />
+    <Compile Include="Enums\MessageStatus.cs" />
     <Compile Include="Extensions\EncodingKeyProviderExtensions.cs" />
     <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestClickEventMessage.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestEventKeyMessage.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestLocationEventMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestMsgIdMessageBase.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestQCodeEventMessage.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestSubscribeEventMessage.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestViewEventMessage.cs" />
@@ -73,6 +75,7 @@
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestVideoMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestVoiceMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestVoiceRecognitionMessage.cs" />
+    <Compile Include="Messages\RequestMessages\Other\RequestTemplateSendJobFinishMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseMediaMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseImageMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseMusicMessage.cs" />

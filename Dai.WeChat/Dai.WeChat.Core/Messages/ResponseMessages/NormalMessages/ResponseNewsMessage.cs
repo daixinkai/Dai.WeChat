@@ -22,10 +22,26 @@ namespace Dai.WeChat.Response
             get { return MessageType.News; }
         }
 
+        int _articleCount;
+
         /// <summary>
         /// 图文消息个数，限制为10条以内
         /// </summary>
-        public int ArticleCount { get; set; }
+        public int ArticleCount
+        {
+            get
+            {
+                if (_articleCount <= 0)
+                {
+                    _articleCount = this.Articles.Count;
+                }
+                return _articleCount;
+            }
+            set
+            {
+                _articleCount = value;
+            }
+        }
 
         /// <summary>
         /// 是否有查看更多按钮
@@ -69,7 +85,7 @@ namespace Dai.WeChat.Response
                                  "<Articles>" + Environment.NewLine +
                                  value + Environment.NewLine +
                                  "</Articles>" + Environment.NewLine +
-                                 "</xml>", ToUserName, FromUserName, CreateTime, MsgType, ArticleCount, ArticleCount);
+                                 "</xml>", ToUserName, FromUserName, CreateTime, MsgType, ArticleCount);
         }
     }
 }
