@@ -35,5 +35,15 @@ namespace Dai.WeChat.Tests
             var value = encodingAESKeyProvider.Decrypt(xml);
 
         }
+
+        [TestMethod]
+        public void TestMethod2()
+        {
+            string xml = @"<xml><ToUserName><![CDATA[gh_751653ce20c7]]></ToUserName><FromUserName><![CDATA[oJOypjpjy_lGb6zhygFXB4q0zz64]]></FromUserName><CreateTime>1482289557</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[CLICK]]></Event><EventKey><![CDATA[Help]]></EventKey></xml>";
+
+          
+            var instance = RequestMessageBase.GetInstance(xml);
+
+        }
     }
 }

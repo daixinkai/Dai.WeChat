@@ -35,29 +35,29 @@ namespace Dai.WeChat.Request
             var node = this.Node;
 
             //Title
-            var tempNode = node.SelectSingleNode("Title");
-            if (tempNode == null)
+            var text = node.GetInnerText("Title");
+            if (text == null)
             {
                 return null;
             }
 
-            this.Title = tempNode.InnerText;
+            this.Title = text;
 
             //Description
-            tempNode = node.SelectSingleNode("Description");
-            if (tempNode == null)
+            text = node.GetInnerText("Description");
+            if (text == null)
             {
                 return null;
             }
-            this.Description = tempNode.InnerText;
+            this.Description = text;
 
             //消息ID
-            tempNode = node.SelectSingleNode("MsgId");
-            if (tempNode == null)
+            text = node.GetInnerText("MsgId");
+            if (text == null)
             {
                 return null;
             }
-            this.MsgId = tempNode.InnerText;
+            this.MsgId = text;
 
             return this;
         }

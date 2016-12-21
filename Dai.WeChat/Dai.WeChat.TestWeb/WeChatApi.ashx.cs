@@ -37,8 +37,8 @@ namespace Dai.WeChat.TestWeb
                 return;
             }
 
-
-
+            LogHelper.Debug(RequestMessageBase.GetRequestXmlString(context.Request.InputStream, encodingAESKeyProvider));
+            context.Request.InputStream.Position = 0;
             var requestMessage = RequestMessageBase.GetInstance(context.Request.InputStream, encodingAESKeyProvider);
 
             if (requestMessage == null)
@@ -47,10 +47,12 @@ namespace Dai.WeChat.TestWeb
                 LogBody(context);
                 return;
             }
-
+            LogHelper.Debug(requestMessage.ToString());
             try
             {
                 var response = DirectiveCenter.GetResponse(requestMessage).GetResponse();
+
+                LogHelper.Debug(requestMessage.GetType().ToString());
 
                 LogHelper.Debug(response);
 

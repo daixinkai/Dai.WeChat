@@ -51,11 +51,13 @@
     <Compile Include="Core\IRespond.cs" />
     <Compile Include="Core\IWeChatButton.cs" />
     <Compile Include="Core\MessageBase.cs" />
+    <Compile Include="Core\NewsMessageItem.cs" />
     <Compile Include="EncodingKey\Cryptography.cs" />
     <Compile Include="EncodingKey\DefaultEncodingAESKeyProvider.cs" />
     <Compile Include="EncodingKey\IEncodingKeyProvider.cs" />
     <Compile Include="EncodingKey\WXBizMsgCrypt.cs" />
     <Compile Include="Extensions\EncodingKeyProviderExtensions.cs" />
+    <Compile Include="Extensions\XmlExtensions.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestClickEventMessage.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestEventKeyMessage.cs" />
     <Compile Include="Messages\RequestMessages\EventMessages\RequestLocationEventMessage.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestLinkMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestLocationMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestMediaMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestMusicMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestTextMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestVideoMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestVoiceMessage.cs" />
@@ -73,6 +76,7 @@
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseMediaMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseImageMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseMusicMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseNewsMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseNormalMessageBase.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseTextMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseVideoMessage.cs" />

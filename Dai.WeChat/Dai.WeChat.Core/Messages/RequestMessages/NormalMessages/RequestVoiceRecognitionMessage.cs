@@ -32,37 +32,36 @@ namespace Dai.WeChat.Request
             var node = this.Node;
 
             //语音格式，如amr，speex等
-            var tempNode = node.SelectSingleNode("Format");
-            if (tempNode == null)
+            var text = node.GetInnerText("Format");
+            if (text == null)
             {
                 return null;
             }
 
-            this.Format = tempNode.InnerText;
+            this.Format = text;
 
             //媒体ID
-            tempNode = node.SelectSingleNode("MediaId");
-            if (tempNode == null)
+            text = node.GetInnerText("MediaId");
+            if (text == null)
             {
                 return null;
             }
-            this.MediaId = tempNode.InnerText;
+            this.MediaId = text;
 
             //消息ID
-            tempNode = node.SelectSingleNode("MsgId");
-            if (tempNode == null)
+            text = node.GetInnerText("MsgId");
+            if (text == null)
             {
                 return null;
             }
-
+            this.MediaId = text;
             //识别结果
-            tempNode = node.SelectSingleNode("Recognition");
-            if (tempNode == null)
+            text = node.GetInnerText("Recognition");
+            if (text == null)
             {
                 return null;
             }
-
-            this.Recognition = tempNode.InnerText;
+            this.Recognition = text;
 
             return this;
         }

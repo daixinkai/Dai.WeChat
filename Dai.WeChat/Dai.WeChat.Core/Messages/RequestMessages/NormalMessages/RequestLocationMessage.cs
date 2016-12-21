@@ -37,34 +37,34 @@ namespace Dai.WeChat.Request
             var node = this.Node;
 
             //纬度
-            var tempNode = node.SelectSingleNode("Location_X");
-            if (tempNode == null)
+            var text = node.GetInnerText("Location_X");
+            if (text == null)
             {
                 return null;
             }
-            this.Location_X = Convert.ToDouble(tempNode.InnerText);
+            this.Location_X = Convert.ToDouble(text);
 
             //经度
-            tempNode = node.SelectSingleNode("Location_Y");
-            if (tempNode == null)
+            text = node.GetInnerText("Location_Y");
+            if (text == null)
             {
                 return null;
             }
-            this.Location_Y = Convert.ToDouble(tempNode.InnerText);
+            this.Location_Y = Convert.ToDouble(text);
 
             //经度
-            tempNode = node.SelectSingleNode("Scale");
-            if (tempNode == null)
+            text = node.GetInnerText("Scale");
+            if (text == null)
             {
                 return null;
             }
-            this.Scale = Convert.ToDouble(tempNode.InnerText);
+            this.Scale = Convert.ToDouble(text);
 
             //位置信息
-            tempNode = node.SelectSingleNode("Label");
-            if (tempNode != null)
+            text = node.GetInnerText("Label");
+            if (text != null)
             {
-                this.Label = tempNode.InnerText;
+                this.Label = text;
             }
 
             return this;

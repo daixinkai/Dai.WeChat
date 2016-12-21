@@ -25,21 +25,21 @@ namespace Dai.WeChat.Request
             var node = this.Node;
 
             //消息内容
-            var tempNode = node.SelectSingleNode("Content");
-            if (tempNode == null)
+            var text = node.GetInnerText("Content");
+            if (text == null)
             {
                 return null;
             }
 
-            this.Content = tempNode.InnerText;
+            this.Content = text;
 
             //消息ID
-            tempNode = node.SelectSingleNode("MsgId");
-            if (tempNode == null)
+            text = node.GetInnerText("MsgId");
+            if (text == null)
             {
                 return null;
             }
-            this.MsgId = tempNode.InnerText;
+            this.MsgId = text;
 
             return this;
         }

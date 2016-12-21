@@ -16,6 +16,12 @@ namespace Dai.WeChat.Request
         /// </summary>
         public string EventKey { get; set; }
 
+        protected override RequestMessageBase Parse()
+        {
+
+            return base.Parse();
+        }
+
         public override string ToString()
         {
             return string.Format("<xml>" + Environment.NewLine +

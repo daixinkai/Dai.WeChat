@@ -32,13 +32,13 @@ namespace Dai.WeChat.Request
             var node = this.Node;
 
             //事件(subscribe/unsubscribe/CLICK)
-            var tempNode = node.SelectSingleNode("Event");
-            if (tempNode == null)
+            var text = node.GetInnerText("Event");
+            if (text == null)
             {
                 return null;
             }
 
-            this.Event = WeChatHelper.ToEnum<EventType>(tempNode.InnerText);
+            this.Event = WeChatHelper.ToEnum<EventType>(text);
 
             return this.ToMessage(node);
 
@@ -57,35 +57,35 @@ namespace Dai.WeChat.Request
                 case EventType.Click:
                     message = this.Copy<RequestClickEventMessage>(o =>
                     {
-                        o.EventKey = GetValue(node, "EventKey");
+                        o.EventKey = node.GetInnerText("EventKey");
                     });
                     break;
                 case EventType.Scan:
                     //是二维码扫描事件
                     message = this.Copy<RequestQCodeEventMessage>(o =>
                     {
-                        o.Ticket = GetValue(node, "Ticket");
-                        o.EventKey = GetValue(node, "EventKey");
+                        o.Ticket = node.GetInnerText("Ticket");
+                        o.EventKey = node.GetInnerText("EventKey");
                     });
                     break;
                 case EventType.Location:
                     //是地理位置事件
                     message = this.Copy<RequestLocationEventMessage>(o =>
                     {
-                        o.Latitude = Convert.ToDouble(GetValue(node, "Latitude"));
-                        o.Longitude = Convert.ToDouble(GetValue(node, "Longitude"));
-                        o.Precision = Convert.ToDouble(GetValue(node, "Precision"));
+                        o.Latitude = Convert.ToDouble(node.GetInnerText("Latitude"));
+                        o.Longitude = Convert.ToDouble(node.GetInnerText("Longitude"));
+                        o.Precision = Convert.ToDouble(node.GetInnerText("Precision"));
                     });
                     break;
                 case EventType.View:
                     message = this.Copy<RequestViewEventMessage>(o =>
                     {
-                        o.EventKey = GetValue(node, "EventKey");
+                        o.EventKey = node.GetInnerText("EventKey");
                     });
                     break;
                 case EventType.Subscribe:
                     //分2种  用户未关注时，进行关注后的事件推送 / 关注事件
-                    string ticekt = GetValue(node, "Ticket");
+                    string ticekt = node.GetInnerText("Ticket");
                     if (ticekt == null)
                     {
                         //是关注事件
@@ -98,8 +98,8 @@ namespace Dai.WeChat.Request
                     {
                         message = this.Copy<RequestQCodeEventMessage>(o =>
                         {
-                            o.Ticket = GetValue(node, "Ticket");
-                            o.EventKey = GetValue(node, "EventKey");
+                            o.Ticket = node.GetInnerText("Ticket");
+                            o.EventKey = node.GetInnerText("EventKey");
                         });
                     }
                     break;
@@ -117,12 +117,6 @@ namespace Dai.WeChat.Request
         }
 
         #endregion
-
-        protected string GetValue(XmlNode node, string nodeName)
-        {
-            XmlNode tempNode = node.SelectSingleNode(nodeName);
-            return tempNode == null ? null : tempNode.Value;
-        }
         private T Copy<T>() where T : RequestEventMessage, new()
         {
             T t = new T();

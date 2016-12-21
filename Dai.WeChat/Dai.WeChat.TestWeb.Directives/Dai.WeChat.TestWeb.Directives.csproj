@@ -40,7 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NotSupportDirective.cs" />
     <Compile Include="TestEventDirective.cs" />
+    <Compile Include="TestLocationDirective.cs" />
     <Compile Include="TestTextDirective.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

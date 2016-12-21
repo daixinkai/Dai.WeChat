@@ -36,6 +36,7 @@ namespace Dai.WeChat.Request
         /// <returns></returns>
         protected virtual RequestMessageBase Parse() { return this; }
 
+
         /// <summary>
         /// 从当前消息创建一个用于回复的消息
         /// </summary>
@@ -53,6 +54,31 @@ namespace Dai.WeChat.Request
         }
 
         #region Instance
+
+        public static string GetRequestXmlString(Stream xmlStream, IEncodingKeyProvider encodingKeyProvider)
+        {
+            if (xmlStream == null || xmlStream.Length == 0)
+            {
+                return null;
+            }
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlStream);
+            XmlNode firstNode = doc.FirstChild;
+            if (firstNode == null)
+            {
+                return null;
+            }
+            if (encodingKeyProvider != null)
+            {
+                encodingKeyProvider.InitFromXmlNode(firstNode);
+            }
+            var encryptXml = firstNode.GetInnerXml("Encrypt");
+            if (encryptXml != null)
+            {
+                return encodingKeyProvider.Decrypt(encryptXml);
+            }
+            return doc.InnerXml;
+        }
 
         /// <summary>
         /// 得到具体的消息处理实例
@@ -123,11 +149,11 @@ namespace Dai.WeChat.Request
                     encodingKeyProvider.InitFromXmlNode(firstNode);
                 }
 
-                var encryptNode = firstNode.SelectSingleNode("Encrypt");
+                var encryptXml = firstNode.GetInnerXml("Encrypt");
 
-                if (encryptNode != null)
+                if (encryptXml != null)
                 {
-                    var instance = GetEncodingInstance(doc.InnerXml, encodingKeyProvider);
+                    var instance = GetEncodingInstance(encryptXml, encodingKeyProvider);
                     if (instance != null)
                     {
                         return instance;
@@ -135,12 +161,12 @@ namespace Dai.WeChat.Request
                 }
 
                 //消息类型
-                XmlNode tempNode = firstNode.SelectSingleNode("MsgType");
-                if (tempNode == null)
+                var text = firstNode.GetInnerText("MsgType");
+                if (text == null)
                 {
                     return null;
                 }
-                message = GetInstance(WeChatHelper.ToEnum<MessageType>(tempNode.InnerText));
+                message = GetInstance(WeChatHelper.ToEnum<MessageType>(text));
                 if (message != null)
                 {
                     if (encoding)
@@ -150,26 +176,26 @@ namespace Dai.WeChat.Request
 
                     message.Node = firstNode;
                     //发送者
-                    tempNode = firstNode.SelectSingleNode("FromUserName");
-                    if (tempNode == null)
+                    text = firstNode.GetInnerText("FromUserName");
+                    if (text == null)
                     {
                         return null;
                     }
-                    message.FromUserName = tempNode.InnerText;
+                    message.FromUserName = text;
                     //接收者
-                    tempNode = firstNode.SelectSingleNode("ToUserName");
-                    if (tempNode == null)
+                    text = firstNode.GetInnerText("ToUserName");
+                    if (text == null)
                     {
                         return null;
                     }
-                    message.ToUserName = tempNode.InnerText;
+                    message.ToUserName = text;
                     //创建时间
-                    tempNode = firstNode.SelectSingleNode("CreateTime");
-                    if (tempNode == null)
+                    text = firstNode.GetInnerText("CreateTime");
+                    if (text == null)
                     {
                         return null;
                     }
-                    message.CreateTime = Convert.ToInt64(tempNode.InnerText);
+                    message.CreateTime = Convert.ToInt64(text);
 
                     ////Url
                     //tempNode = firstNode.SelectSingleNode("URL");
@@ -212,13 +238,13 @@ namespace Dai.WeChat.Request
             switch (type)
             {
                 case MessageType.Text: return new RequestTextMessage();
-                //case MessageType.Image: return new RequestImageMessage();
-                //case MessageType.Link: return new RequestLinkMessage();
-                //case MessageType.Location: return new RequestLocationMessage();
+                case MessageType.Image: return new RequestImageMessage();
+                case MessageType.Link: return new RequestLinkMessage();
+                case MessageType.Location: return new RequestLocationMessage();
                 //case MessageType.Music: return new RequestMusicMessage();
                 //case MessageType.News: return null;
-                //case MessageType.Video: return new RequestVideoMessage();
-                //case MessageType.Voice: return new RequestVoiceMessage();
+                case MessageType.Video: return new RequestVideoMessage();
+                case MessageType.Voice: return new RequestVoiceMessage();
                 case MessageType.Event: return new RequestEventMessage();
                 default: return null;
             }

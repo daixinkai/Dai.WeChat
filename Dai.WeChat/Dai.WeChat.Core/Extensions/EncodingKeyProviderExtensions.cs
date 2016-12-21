@@ -14,10 +14,10 @@ namespace Dai.WeChat
             if (string.IsNullOrEmpty(encodingKeyProvider.AppId))
             {
                 //接收者
-                var toUserNode = node.SelectSingleNode("ToUserName");
-                if (toUserNode != null)
+                var text = node.GetInnerText("ToUserName");
+                if (text != null)
                 {
-                    encodingKeyProvider.AppId = toUserNode.InnerText;
+                    encodingKeyProvider.AppId = text;
                 }
             }
 
