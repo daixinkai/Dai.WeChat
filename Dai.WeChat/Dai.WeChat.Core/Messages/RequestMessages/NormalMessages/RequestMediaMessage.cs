@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 namespace Dai.WeChat.Request
 {
     /// <summary>
-    /// 表示普通的消息
+    /// 表示带有多媒体ID的消息
     /// </summary>
-    public abstract class RequestNormalMessageBase : RequestMessageBase
+    public abstract class RequestMediaMessage : RequestNormalMessageBase
     {
         /// <summary>
-        /// 消息id，64位整型
+        /// 媒体id，可以调用多媒体文件下载接口拉取该媒体
         /// </summary>
-        public string MsgId { get; set; }
+        public string MediaId { get; set; }
     }
 }

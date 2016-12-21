@@ -85,10 +85,11 @@ namespace Dai.WeChat
         /// </summary>
         /// <param name="time"> DateTime时间格式</param>
         /// <returns>Unix时间戳格式</returns>
-        internal static int ConvertDateTimeInt(System.DateTime time)
+        internal static long ConvertDateTimeInt(System.DateTime time)
         {
+            //return Convert.ToInt64(DateTime.Now.Ticks.ToString(System.Globalization.CultureInfo.InvariantCulture)); 
             System.DateTime startTime = TimeZone.CurrentTimeZone.ToLocalTime(new System.DateTime(1970, 1, 1));
-            return (int)(time - startTime).TotalSeconds;
+            return (long)(time - startTime).TotalSeconds;
         }
 
         /// <summary>

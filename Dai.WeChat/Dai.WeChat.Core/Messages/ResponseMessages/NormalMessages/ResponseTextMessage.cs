@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dai.WeChat.Response
 {
+    /// <summary>
+    /// 回复的文本消息
+    /// </summary>
     public class ResponseTextMessage : ResponseNormalMessageBase
     {
         public override MessageType MsgType

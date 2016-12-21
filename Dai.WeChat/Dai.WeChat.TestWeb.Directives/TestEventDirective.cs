@@ -6,35 +6,33 @@ using System.Threading.Tasks;
 using Dai.WeChat.Request;
 using Dai.WeChat.Response;
 
-namespace Dai.WeChat.Directives
+namespace Dai.WeChat.TestWeb.Directives
 {
-    class TestDirective : IDirective
+    class TestEventDirective : IDirective
     {
         public int Order
         {
             get
             {
-                return 1;
+                return 2;
             }
         }
 
         public IRespond GetResponse(RequestMessageBase requestMessage)
         {
-
-            var requestTextMessage = requestMessage as RequestTextMessage;
+            var requestEventKeyMessage = requestMessage as RequestEventKeyMessage;
 
             var response = requestMessage.ToResponseMessage<ResponseTextMessage>();
 
-            response.MsgId = requestTextMessage.MsgId;
 
-            response.Content = "测试指令 : " + requestTextMessage.Content;
+            response.Content = "测试指令 :  key= " + requestEventKeyMessage.EventKey;
 
             return response;
         }
 
         public bool IsMatch(RequestMessageBase requestMessage)
         {
-            return requestMessage is RequestTextMessage;
+            return requestMessage is RequestEventKeyMessage;
         }
     }
 }

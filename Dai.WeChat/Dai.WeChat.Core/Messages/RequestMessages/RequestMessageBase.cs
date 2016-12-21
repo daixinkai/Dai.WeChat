@@ -219,7 +219,7 @@ namespace Dai.WeChat.Request
                 //case MessageType.News: return null;
                 //case MessageType.Video: return new RequestVideoMessage();
                 //case MessageType.Voice: return new RequestVoiceMessage();
-                //case MessageType.Event: return new EventMessage();
+                case MessageType.Event: return new RequestEventMessage();
                 default: return null;
             }
         }

@@ -51,15 +51,32 @@
     <Compile Include="Core\IRespond.cs" />
     <Compile Include="Core\IWeChatButton.cs" />
     <Compile Include="Core\MessageBase.cs" />
-    <Compile Include="Directives\TestDirective.cs" />
     <Compile Include="EncodingKey\Cryptography.cs" />
     <Compile Include="EncodingKey\DefaultEncodingAESKeyProvider.cs" />
     <Compile Include="EncodingKey\IEncodingKeyProvider.cs" />
     <Compile Include="EncodingKey\WXBizMsgCrypt.cs" />
     <Compile Include="Extensions\EncodingKeyProviderExtensions.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestClickEventMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestEventKeyMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestLocationEventMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestQCodeEventMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestSubscribeEventMessage.cs" />
+    <Compile Include="Messages\RequestMessages\EventMessages\RequestViewEventMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestImageMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestLinkMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestLocationMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestMediaMessage.cs" />
     <Compile Include="Messages\RequestMessages\NormalMessages\RequestTextMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestVideoMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestVoiceMessage.cs" />
+    <Compile Include="Messages\RequestMessages\NormalMessages\RequestVoiceRecognitionMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseMediaMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseImageMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseMusicMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseNormalMessageBase.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseTextMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseVideoMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseVoiceMessage.cs" />
     <Compile Include="WeChatHelper.cs" />
     <Compile Include="Core\WeChatRespondBase.cs" />
     <Compile Include="Enums\ButtonType.cs" />
@@ -73,7 +90,9 @@
     <Compile Include="Messages\ResponseMessages\ResponseMessageBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Directives\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -8,30 +8,44 @@ using System.Xml;
 namespace Dai.WeChat.Request
 {
     /// <summary>
-    /// 表示一个文本消息,可以用于回复
+    /// 表示图片消息
     /// </summary>
-    public class RequestTextMessage : RequestNormalMessageBase
+    public class RequestImageMessage : RequestMediaMessage
     {
-        internal RequestTextMessage() { }
         public override MessageType MsgType
         {
-            get { return MessageType.Text; }
+            get
+            {
+                return MessageType.Image;
+            }
         }
 
-        public string Content { get; set; }
+        /// <summary>
+        /// 图片链接
+        /// </summary>
+        public string PicUrl { get; set; }
 
         protected override RequestMessageBase Parse()
         {
             var node = this.Node;
+            //媒体ID
+            var tempNode = node.SelectSingleNode("MediaId");
+            if (tempNode == null)
+            {
+                return null;
+            }
+            this.MediaId = tempNode.InnerText;
 
-            //消息内容
-            var tempNode = node.SelectSingleNode("Content");
+            this.CreateTime = Convert.ToInt64(tempNode.InnerText);
+
+            //图片链接
+            tempNode = node.SelectSingleNode("PicUrl");
             if (tempNode == null)
             {
                 return null;
             }
 
-            this.Content = tempNode.InnerText;
+            this.PicUrl = tempNode.InnerText;
 
             //消息ID
             tempNode = node.SelectSingleNode("MsgId");
@@ -43,6 +57,8 @@ namespace Dai.WeChat.Request
 
             return this;
         }
+
+
         public override string ToString()
         {
             return string.Format("<xml>" + Environment.NewLine +
@@ -50,12 +66,11 @@ namespace Dai.WeChat.Request
                              "<FromUserName><![CDATA[{1}]]></FromUserName>" + Environment.NewLine +
                              "<CreateTime>{2}</CreateTime>" + Environment.NewLine +
                              "<MsgType><![CDATA[{3}]]></MsgType>" + Environment.NewLine +
-                             "<Content><![CDATA[{4}]]></Content>" + Environment.NewLine +
-                             "<MsgId>{5}</MsgId>" + Environment.NewLine +
-                             "</xml>", ToUserName, FromUserName, CreateTime, MsgType, Content, MsgId);
+                             "<PicUrl><![CDATA[{4}]]></PicUrl>" + Environment.NewLine +
+                             "<MediaId><![CDATA[{5}]]></MediaId>" + Environment.NewLine +
+                             "<MsgId>{6}</MsgId>" + Environment.NewLine +
+                             "</xml>", ToUserName, FromUserName, CreateTime, MsgType, PicUrl, MediaId, MsgId);
         }
-
-
 
     }
 }

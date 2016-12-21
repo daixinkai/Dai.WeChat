@@ -8,30 +8,42 @@ using System.Xml;
 namespace Dai.WeChat.Request
 {
     /// <summary>
-    /// 表示一个文本消息,可以用于回复
+    /// 表示一个语音消息
     /// </summary>
-    public class RequestTextMessage : RequestNormalMessageBase
+    public class RequestVoiceMessage : RequestMediaMessage
     {
-        internal RequestTextMessage() { }
+
         public override MessageType MsgType
         {
-            get { return MessageType.Text; }
+            get { return MessageType.Voice; }
         }
 
-        public string Content { get; set; }
+        /// <summary>
+        /// 语音格式，如amr，speex等
+        /// </summary>
+        public string Format { get; set; }
+
 
         protected override RequestMessageBase Parse()
         {
             var node = this.Node;
 
-            //消息内容
-            var tempNode = node.SelectSingleNode("Content");
+            //语音格式，如amr，speex等
+            var tempNode = node.SelectSingleNode("Format");
             if (tempNode == null)
             {
                 return null;
             }
 
-            this.Content = tempNode.InnerText;
+            this.Format = tempNode.InnerText;
+
+            //媒体ID
+            tempNode = node.SelectSingleNode("MediaId");
+            if (tempNode == null)
+            {
+                return null;
+            }
+            this.MediaId = tempNode.InnerText;
 
             //消息ID
             tempNode = node.SelectSingleNode("MsgId");
@@ -43,6 +55,8 @@ namespace Dai.WeChat.Request
 
             return this;
         }
+
+
         public override string ToString()
         {
             return string.Format("<xml>" + Environment.NewLine +
@@ -50,12 +64,11 @@ namespace Dai.WeChat.Request
                              "<FromUserName><![CDATA[{1}]]></FromUserName>" + Environment.NewLine +
                              "<CreateTime>{2}</CreateTime>" + Environment.NewLine +
                              "<MsgType><![CDATA[{3}]]></MsgType>" + Environment.NewLine +
-                             "<Content><![CDATA[{4}]]></Content>" + Environment.NewLine +
-                             "<MsgId>{5}</MsgId>" + Environment.NewLine +
-                             "</xml>", ToUserName, FromUserName, CreateTime, MsgType, Content, MsgId);
+                             "<MediaId><![CDATA[{4}]]></MediaId>" + Environment.NewLine +
+                             "<Format><![CDATA[{5}]]></Format>" + Environment.NewLine +
+                             "<MsgId>{6}</MsgId>" + Environment.NewLine +
+                             "</xml>", ToUserName, FromUserName, CreateTime, MsgType, MediaId, Format, MsgId);
         }
-
-
 
     }
 }

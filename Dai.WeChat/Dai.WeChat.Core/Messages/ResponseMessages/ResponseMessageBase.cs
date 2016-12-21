@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Dai.WeChat.Response
 {
     /// <summary>
-    /// 表示发送的消息
+    /// 表示回复的消息
     /// </summary>
     public abstract class ResponseMessageBase : MessageBase, IRespond
     {
