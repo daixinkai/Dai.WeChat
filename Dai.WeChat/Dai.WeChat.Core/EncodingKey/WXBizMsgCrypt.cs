@@ -102,7 +102,7 @@ namespace Dai.WeChat
             }
             catch (Exception)
             {
-                return (int)WXBizMsgCryptErrorCode.WXBizMsgCrypt_ParseXml_Error;
+                sEncryptMsg = sPostData;
             }
             //verify signature
             int ret = 0;
@@ -228,12 +228,13 @@ namespace Dai.WeChat
             }
 
             SHA1 sha;
-            ASCIIEncoding enc;
+            Encoding enc;
             string hash = "";
             try
             {
                 sha = new SHA1CryptoServiceProvider();
                 enc = new ASCIIEncoding();
+                //enc = new UTF8Encoding();
                 byte[] dataToHash = enc.GetBytes(raw);
                 byte[] dataHashed = sha.ComputeHash(dataToHash);
                 hash = BitConverter.ToString(dataHashed).Replace("-", "");

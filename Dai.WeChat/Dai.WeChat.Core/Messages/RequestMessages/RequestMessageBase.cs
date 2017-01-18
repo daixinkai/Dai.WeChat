@@ -149,11 +149,12 @@ namespace Dai.WeChat.Request
                     encodingKeyProvider.InitFromXmlNode(firstNode);
                 }
 
-                var encryptXml = firstNode.GetInnerXml("Encrypt");
+                var encryptXml = firstNode.GetInnerText("Encrypt");
 
                 if (encryptXml != null)
                 {
-                    var instance = GetEncodingInstance(encryptXml, encodingKeyProvider);
+                    //var instance = GetEncodingInstance(encryptXml, encodingKeyProvider);
+                    var instance = GetEncodingInstance(doc.InnerXml, encodingKeyProvider);
                     if (instance != null)
                     {
                         return instance;
@@ -216,13 +217,13 @@ namespace Dai.WeChat.Request
         }
 
 
-        static RequestMessageBase GetEncodingInstance(string encryptXml, IEncodingKeyProvider encodingKeyProvider)
+        static RequestMessageBase GetEncodingInstance(string context, IEncodingKeyProvider encodingKeyProvider)
         {
             if (encodingKeyProvider == null)
             {
                 return null;
             }
-            string xml = encodingKeyProvider.Decrypt(encryptXml);
+            string xml = encodingKeyProvider.Decrypt(context);
             if (xml == null)
             {
 
