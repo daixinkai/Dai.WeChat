@@ -30,20 +30,39 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Dai.CommonLib.Core, Version=2.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dai.CommonLib.Core.2.0.2.0\lib\net45\Dai.CommonLib.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\WeChatApiExpireResponse.cs" />
-    <Compile Include="Api\WeChatApiResponse.cs" />
-    <Compile Include="Api\WeChatApiTicketResponse.cs" />
+    <Compile Include="Api\Request\ImageKFMessage.cs" />
+    <Compile Include="Api\Request\KFAccount.cs" />
+    <Compile Include="Api\Request\KFMessage.cs" />
+    <Compile Include="Api\Request\MusicKFMessage.cs" />
+    <Compile Include="Api\Request\NewsKFMessage.cs" />
+    <Compile Include="Api\Request\TextKFMessage.cs" />
+    <Compile Include="Api\Request\VideoKFMessage.cs" />
+    <Compile Include="Api\Request\VoiceKFMessage.cs" />
+    <Compile Include="Api\Response\User.cs" />
+    <Compile Include="Api\Response\UserList.cs" />
+    <Compile Include="Api\Response\WeChatApiExpireResponse.cs" />
+    <Compile Include="Api\Response\WeChatApiResponse.cs" />
+    <Compile Include="Api\Response\WeChatApiTicketResponse.cs" />
     <Compile Include="Attributes\IgnoreDirectiveAttribute.cs" />
+    <Compile Include="Buttons\WeChatButton.cs" />
+    <Compile Include="Buttons\WeChatClickButton.cs" />
+    <Compile Include="Buttons\WeChatParentButton.cs" />
+    <Compile Include="Buttons\WeChatViewButton.cs" />
+    <Compile Include="Core\AccessToken.cs" />
     <Compile Include="Core\CustomMenu.cs" />
     <Compile Include="Core\DirectiveCenter.cs" />
     <Compile Include="Core\IDirective.cs" />
@@ -84,6 +103,8 @@
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseTextMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseVideoMessage.cs" />
     <Compile Include="Messages\ResponseMessages\NormalMessages\ResponseVoiceMessage.cs" />
+    <Compile Include="Messages\ResponseMessages\SuccessResponseMessage.cs" />
+    <Compile Include="Tools\WeiXinApiHelper.cs" />
     <Compile Include="WeChatHelper.cs" />
     <Compile Include="Core\WeChatRespondBase.cs" />
     <Compile Include="Enums\ButtonType.cs" />
@@ -99,6 +120,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Directives\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

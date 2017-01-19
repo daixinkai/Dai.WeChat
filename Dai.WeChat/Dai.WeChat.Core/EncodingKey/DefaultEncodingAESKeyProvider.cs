@@ -13,8 +13,9 @@ namespace Dai.WeChat
     public sealed class DefaultEncodingAESKeyProvider : IEncodingKeyProvider
     {
 
-        public DefaultEncodingAESKeyProvider(string token, string encodingAesKey, NameValueCollection nameValueCollection)
+        public DefaultEncodingAESKeyProvider(string appId, string token, string encodingAesKey, NameValueCollection nameValueCollection)
         {
+            AppId = appId;
             Token = token;
             EncodingAesKey = encodingAesKey;
             MsgSignature = nameValueCollection["msg_signature"];
@@ -22,7 +23,7 @@ namespace Dai.WeChat
             Nonce = nameValueCollection["nonce"];
         }
 
-        public DefaultEncodingAESKeyProvider(string token, string encodingAesKey, string appId, string msgSignature, string timeStamp, string nonce)
+        public DefaultEncodingAESKeyProvider(string appId, string token, string encodingAesKey, string msgSignature, string timeStamp, string nonce)
         {
             Token = token;
             EncodingAesKey = encodingAesKey;
@@ -33,20 +34,11 @@ namespace Dai.WeChat
         }
 
 
-        public DefaultEncodingAESKeyProvider(string token, string encodingAesKey, string msgSignature, string timeStamp, string nonce)
-        {
-            Token = token;
-            EncodingAesKey = encodingAesKey;
-            MsgSignature = msgSignature;
-            TimeStamp = timeStamp;
-            Nonce = nonce;
-        }
-
         public string Token { get; private set; }
 
         public string EncodingAesKey { get; private set; }
 
-        public string AppId { get; set; }
+        public string AppId { get; private set; }
 
         public string MsgSignature { get; set; }
 

@@ -7,6 +7,7 @@ using Dai.WeChat.TestWeb.Models;
 using Dai.WeChat.Request;
 using System.Text;
 using System.Xml;
+using Dai.WeChat.Response;
 
 namespace Dai.WeChat.TestWeb
 {
@@ -20,10 +21,13 @@ namespace Dai.WeChat.TestWeb
         {
 
             //LogBody(context);
+
+            string appId = "wxb43ab71368baff54";
+
             string sToken = "daixinkai";
             //string sEncodingAESKey = "gGnOmL5YyOlkAAcLhbogPU2wmLeboUzYlnTDwZ0231t";
             string sEncodingAESKey = "jqrj2EPPEAByFF0gN1KIqZMpiR5EuFImJlPacD7OaVz";
-            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sToken, sEncodingAESKey, context.Request.QueryString);
+            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(appId, sToken, sEncodingAESKey, context.Request.QueryString);
 
             if (context.Request.InputStream == null || context.Request.InputStream.Length == 0)
             {
@@ -39,16 +43,19 @@ namespace Dai.WeChat.TestWeb
             LogHelper.Debug(RequestMessageBase.GetRequestXmlString(context.Request.InputStream, encodingAESKeyProvider));
             context.Request.InputStream.Position = 0;
 
-            //encodingAESKeyProvider = null;
             var requestMessage = RequestMessageBase.GetInstance(context.Request.InputStream, encodingAESKeyProvider);
 
             if (requestMessage == null)
             {
                 LogHelper.Debug("requestMessage=null");
                 LogBody(context);
+
+
+                context.Response.Write(SuccessResponseMessage.Instance.GetResponse());
                 return;
             }
             LogHelper.Debug(requestMessage.ToString());
+            LogBody(context);
             try
             {
                 var response = DirectiveCenter.GetResponse(requestMessage).GetResponse();

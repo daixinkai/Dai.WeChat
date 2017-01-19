@@ -12,7 +12,7 @@ namespace Dai.WeChat
     public interface IEncodingKeyProvider
     {
 
-        string AppId { get; set; }
+        string AppId { get; }
 
         string TimeStamp { get; set; }
 

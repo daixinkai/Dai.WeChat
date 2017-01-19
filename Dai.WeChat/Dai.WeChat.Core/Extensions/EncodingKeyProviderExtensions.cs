@@ -9,18 +9,18 @@ namespace Dai.WeChat
 {
     internal static class EncodingKeyProviderExtensions
     {
-        internal static void InitFromXmlNode(this IEncodingKeyProvider encodingKeyProvider, XmlNode node)
-        {
-            if (string.IsNullOrEmpty(encodingKeyProvider.AppId))
-            {
-                //接收者
-                var text = node.GetInnerText("ToUserName");
-                if (text != null)
-                {
-                    encodingKeyProvider.AppId = text;
-                }
-            }
+        //internal static void InitFromXmlNode(this IEncodingKeyProvider encodingKeyProvider, XmlNode node)
+        //{
+        //    if (string.IsNullOrEmpty(encodingKeyProvider.AppId))
+        //    {
+        //        //接收者
+        //        var text = node.GetInnerText("ToUserName");
+        //        if (text != null)
+        //        {
+        //            encodingKeyProvider.AppId = text;
+        //        }
+        //    }
 
-        }
+        //}
     }
 }

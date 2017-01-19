@@ -1,4 +1,5 @@
 ﻿using Dai.WeChat.Request;
+using Dai.WeChat.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,11 +10,18 @@ namespace Dai.WeChat
 {
     public static class DirectiveCenter
     {
+
+        /// <summary>
+        /// 获取或设置是否响应默认消息
+        /// </summary>
+        public static bool ResponseSuccessMessage { get; set; }
+
         static readonly ICollection<IDirective> _directives;
 
         static DirectiveCenter()
         {
             _directives = GetAllDirectives().Where(o => !o.GetType().IsDefined(typeof(IgnoreDirectiveAttribute), false)).OrderBy(o => o.Order).ToList();
+            ResponseSuccessMessage = true;
         }
 
 
@@ -38,6 +46,12 @@ namespace Dai.WeChat
                     return item.GetResponse(requestMessage);
                 }
             }
+
+            if (ResponseSuccessMessage)
+            {
+                return SuccessResponseMessage.Instance;
+            }
+
             return null;
         }
 

@@ -2,6 +2,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Dai.WeChat.Request;
 using System.Collections.Specialized;
+using System.Web;
+using System.Xml;
 
 namespace Dai.WeChat.Tests
 {
@@ -26,7 +28,7 @@ namespace Dai.WeChat.Tests
             string appId = "wxb43ab71368baff54";
             string sEncodingAESKey = "gGnOmL5YyOlkAAcLhbogPU2wmLeboUzYlnTDwZ0231t";
 
-            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sToken, sEncodingAESKey, msg_signature, timestamp, nonce);
+            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(appId, sToken, sEncodingAESKey, msg_signature, timestamp, nonce);
 
             //encodingAESKeyProvider.AppId = appId;
 
@@ -39,29 +41,107 @@ namespace Dai.WeChat.Tests
         [TestMethod]
         public void TestMethod2()
         {
-            //string xml = @"<xml><ToUserName><![CDATA[gh_751653ce20c7]]></ToUserName><FromUserName><![CDATA[oJOypjpjy_lGb6zhygFXB4q0zz64]]></FromUserName><CreateTime>1482289557</CreateTime><MsgType><![CDATA[event]]></MsgType><Event><![CDATA[CLICK]]></Event><EventKey><![CDATA[Help]]></EventKey></xml>";
+            //公众平台上开发者设置的token, appID, EncodingAESKey
+            string sToken = "QDG6eK";
+            string sAppID = "wx5823bf96d3bd56c7";
+            string sEncodingAESKey = "jWmYm7qr5nMoAUwZRjGtBxmz3KA1tkAj3ykkR6q2B2C";
 
-            string xml = "<xml><ToUserName><![CDATA[gh_7b44a2edbf75]]></ToUserName><Encrypt><![CDATA[i9tRB+g/Y/aFIiMg/95ZsXJc1myEL7UwIMBH+lsAD00tW++D41emQVOIAPpDSNX3x5W+l/iR3UuinTguReHQHEjpKgEk0q8ZKYyd6wp4Vt2GoogwLeH7ZaitIfH3cS34uvd9Q9Op5Z8zaB81n+YooDGM4YIdVlQvB3ydkGYpp15NIkrW3ivorHeEL9VwXc+BDog44WwW3U/UMFy+ns+tnvOectK7VCA4DHuDaaumNIF0u+FWzlYLRGDDV4mNb0+V1JURerlzFvhMX0mTNOzFlx6eftfAgmFj8EI0MulcQmbOo1WMEHXYAeYPeE4u3OC0XFw6XM4w8pcuc1O5IojuXup+z3Yl7q6ngo/nABUI558eBpyb9Qc+aOacUQhLS3AyLDq8rty4JeYJPWL8Ptl7xxdS18nGIf+GNJHi1CnsqRQ=]]></Encrypt></xml>";
+            Tencent.WXBizMsgCrypt wxcpt = new Tencent.WXBizMsgCrypt(sToken, sEncodingAESKey, sAppID);
 
+            /* 1. 对用户回复的数据进行解密。
+            * 用户回复消息或者点击事件响应时，企业会收到回调消息，假设企业收到的推送消息：
+            * 	POST /cgi-bin/wxpush? msg_signature=477715d11cdb4164915debcba66cb864d751f3e6&timestamp=1409659813&nonce=1372623149 HTTP/1.1
+               Host: qy.weixin.qq.com
+               Content-Length: 613
+            *
+            * 	<xml>
+                   <ToUserName><![CDATA[wx5823bf96d3bd56c7]]></ToUserName>
+                   <Encrypt><![CDATA[RypEvHKD8QQKFhvQ6QleEB4J58tiPdvo+rtK1I9qca6aM/wvqnLSV5zEPeusUiX5L5X/0lWfrf0QADHHhGd3QczcdCUpj911L3vg3W/sYYvuJTs3TUUkSUXxaccAS0qhxchrRYt66wiSpGLYL42aM6A8dTT+6k4aSknmPj48kzJs8qLjvd4Xgpue06DOdnLxAUHzM6+kDZ+HMZfJYuR+LtwGc2hgf5gsijff0ekUNXZiqATP7PF5mZxZ3Izoun1s4zG4LUMnvw2r+KqCKIw+3IQH03v+BCA9nMELNqbSf6tiWSrXJB3LAVGUcallcrw8V2t9EL4EhzJWrQUax5wLVMNS0+rUPA3k22Ncx4XXZS9o0MBH27Bo6BpNelZpS+/uh9KsNlY6bHCmJU9p8g7m3fVKn28H3KDYA5Pl/T8Z1ptDAVe0lXdQ2YoyyH2uyPIGHBZZIs2pDBS8R07+qN+E7Q==]]></Encrypt>
+               </xml>
+            */
+            string sReqMsgSig = "477715d11cdb4164915debcba66cb864d751f3e6";
+            string sReqTimeStamp = "1409659813";
+            string sReqNonce = "1372623149";
+            string sReqData = "<xml><ToUserName><![CDATA[wx5823bf96d3bd56c7]]></ToUserName><Encrypt><![CDATA[RypEvHKD8QQKFhvQ6QleEB4J58tiPdvo+rtK1I9qca6aM/wvqnLSV5zEPeusUiX5L5X/0lWfrf0QADHHhGd3QczcdCUpj911L3vg3W/sYYvuJTs3TUUkSUXxaccAS0qhxchrRYt66wiSpGLYL42aM6A8dTT+6k4aSknmPj48kzJs8qLjvd4Xgpue06DOdnLxAUHzM6+kDZ+HMZfJYuR+LtwGc2hgf5gsijff0ekUNXZiqATP7PF5mZxZ3Izoun1s4zG4LUMnvw2r+KqCKIw+3IQH03v+BCA9nMELNqbSf6tiWSrXJB3LAVGUcallcrw8V2t9EL4EhzJWrQUax5wLVMNS0+rUPA3k22Ncx4XXZS9o0MBH27Bo6BpNelZpS+/uh9KsNlY6bHCmJU9p8g7m3fVKn28H3KDYA5Pl/T8Z1ptDAVe0lXdQ2YoyyH2uyPIGHBZZIs2pDBS8R07+qN+E7Q==]]></Encrypt></xml>";
+            string sMsg = "";  //解析之后的明文
+            int ret = 0;
+            ret = wxcpt.DecryptMsg(sReqMsgSig, sReqTimeStamp, sReqNonce, sReqData, ref sMsg);
+
+
+
+            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sAppID, sToken, sEncodingAESKey, sReqMsgSig, sReqTimeStamp, sReqNonce);
+
+            var value = encodingAESKeyProvider.Decrypt(sReqData);
+
+            if (ret != 0)
+            {
+                System.Console.WriteLine("ERR: Decrypt fail, ret: " + ret);
+                return;
+            }
+            System.Console.WriteLine(sMsg);
+
+
+            /*
+             * 2. 企业回复用户消息也需要加密和拼接xml字符串。
+             * 假设企业需要回复用户的消息为：
+             * 		<xml>
+             * 		<ToUserName><![CDATA[mycreate]]></ToUserName>
+             * 		<FromUserName><![CDATA[wx5823bf96d3bd56c7]]></FromUserName>
+             * 		<CreateTime>1348831860</CreateTime>
+                    <MsgType><![CDATA[text]]></MsgType>
+             *      <Content><![CDATA[this is a test]]></Content>
+             *      <MsgId>1234567890123456</MsgId>
+             *      </xml>
+             * 生成xml格式的加密消息过程为：
+             */
+            string sRespData = "<xml><ToUserName><![CDATA[mycreate]]></ToUserName><FromUserName><![CDATA[wx582测试一下中文的情况，消息长度是按字节来算的396d3bd56c7]]></FromUserName><CreateTime>1348831860</CreateTime><MsgType><![CDATA[text]]></MsgType><Content><![CDATA[this is a test]]></Content><MsgId>1234567890123456</MsgId></xml>";
+            string sEncryptMsg = ""; //xml格式的密文
+            ret = wxcpt.EncryptMsg(sRespData, sReqTimeStamp, sReqNonce, ref sEncryptMsg);
+            System.Console.WriteLine("sEncryptMsg");
+            System.Console.WriteLine(sEncryptMsg);
+
+            /*测试：
+             * 将sEncryptMsg解密看看是否是原文
+             * */
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(sEncryptMsg);
+            XmlNode root = doc.FirstChild;
+            string sig = root["MsgSignature"].InnerText;
+            string enc = root["Encrypt"].InnerText;
+            string timestamp = root["TimeStamp"].InnerText;
+            string nonce = root["Nonce"].InnerText;
+            string stmp = "";
+            ret = wxcpt.DecryptMsg(sig, timestamp, nonce, sEncryptMsg, ref stmp);
+            System.Console.WriteLine("stemp");
+            System.Console.WriteLine(stmp + ret);
+
+        }
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            string xml = "<xml><ToUserName><![CDATA[gh_7b44a2edbf75]]></ToUserName><Encrypt><![CDATA[fADvCAUGNUXjpj9fktXOroeDbsFgxGwAwN9Z6TeI5+sBjb1MeRTw0lUdqlr5C0TpprJ9VZuwCjzBc6PDcigBE5cfda2FtY42hbxdyJQ87/Gdc3sBpgZzt8FnKPqDOAZ7o3M9xdWqwlwtYq7mhYNO6Qs0yOkW5RefkccgS7DCDoekWt6vjDRhEv7LWoQQlwbUNQWSqGz8DLDkiOg462wdYRtzOU6UInLAKH85EYoUFEXcBeI39R9CUKHEd/wvTdPOxPLuZYTFSygcG8jPA5tOWQz13lpb4s7ZyUM1uP9GwqYocwgp6r8zkRzwamBAED6BQ5eNYTCSMFqPUmn22LVhyJe2JO05dLmFbx1z2MwsywTQPeGt4/WCsmKRE7L1pzF+3j1FR+rWLcH1t2CA1nEyqZKiCQWCFvZ+PcOwNEOOCb0=]]></Encrypt></xml>";
+
+            string sAppId = "wxb43ab71368baff54";
             string sToken = "daixinkai";
+            //"8148081e1e0307789026db4f63ce40fb"
             string sEncodingAESKey = "jqrj2EPPEAByFF0gN1KIqZMpiR5EuFImJlPacD7OaVz";
 
-            NameValueCollection nameValue = new NameValueCollection();
+            string queryString = "signature=b8f61d04bf4a84f0c0262a8930377ebc36b1bd2f&timestamp=1484810001&nonce=1632765309&openid=oRCT_jrmHyguNfexhImv2NRiwGFM&encrypt_type=aes&msg_signature=1bf0583fbaf37dfee33c7a9d33e76cfab416749f";
 
-            nameValue.Add("signature", "e38161882b1dc6fd3a0a95f7caf325b99f3a3f57");
-            nameValue.Add("timestamp", "1484734150");
-            nameValue.Add("nonce", "66184180");
-            nameValue.Add("openid", "oRCT_jrmHyguNfexhImv2NRiwGFM");
-            nameValue.Add("encrypt_type", "aes");
-            nameValue.Add("msg_signature", "d9a62410ec2f2cf7e258054c54f32871eed74a3a");
+            HttpRequest request = new HttpRequest("", "http://www.baidu.com", queryString);
+
+            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sAppId, sToken, sEncodingAESKey, request.QueryString);
 
 
-            //"signature=7a52eaf1b6e67b366f03ae360265bd80fd6f0350&timestamp=1484733943&nonce=729502389&openid=oRCT_jrmHyguNfexhImv2NRiwGFM&encrypt_type=aes&msg_signature=fb6cc65ce40687701c20b981bb097c2cf67700cf"
 
-            DefaultEncodingAESKeyProvider encodingAESKeyProvider = new DefaultEncodingAESKeyProvider(sToken, sEncodingAESKey, nameValue);
+            var value = encodingAESKeyProvider.Decrypt(xml);
+
 
             var instance = RequestMessageBase.GetInstance(xml, encodingAESKeyProvider);
 
         }
+
+
     }
 }

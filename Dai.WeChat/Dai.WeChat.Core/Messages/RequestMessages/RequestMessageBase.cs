@@ -68,10 +68,10 @@ namespace Dai.WeChat.Request
             {
                 return null;
             }
-            if (encodingKeyProvider != null)
-            {
-                encodingKeyProvider.InitFromXmlNode(firstNode);
-            }
+            //if (encodingKeyProvider != null)
+            //{
+            //    encodingKeyProvider.InitFromXmlNode(firstNode);
+            //}
             var encryptXml = firstNode.GetInnerXml("Encrypt");
             if (encryptXml != null)
             {
@@ -144,10 +144,10 @@ namespace Dai.WeChat.Request
                 {
                     return null;
                 }
-                if (encodingKeyProvider != null)
-                {
-                    encodingKeyProvider.InitFromXmlNode(firstNode);
-                }
+                //if (encodingKeyProvider != null)
+                //{
+                //    encodingKeyProvider.InitFromXmlNode(firstNode);
+                //}
 
                 var encryptXml = firstNode.GetInnerText("Encrypt");
 

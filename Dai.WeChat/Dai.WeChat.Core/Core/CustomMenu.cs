@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace Dai.WeChat
     /// <summary>
     /// 表示自定义菜单
     /// </summary>
-    public sealed class CustomMenu
+    public sealed class CustomMenu : IEnumerable<IWeChatButton>
     {
         public CustomMenu()
         {
@@ -61,6 +62,16 @@ namespace Dai.WeChat
             }
             sb.Append("]}");
             return sb.ToString();
+        }
+
+        public IEnumerator<IWeChatButton> GetEnumerator()
+        {
+            return Buttons.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
         }
     }
 }
