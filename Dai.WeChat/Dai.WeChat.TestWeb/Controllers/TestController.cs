@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dai.WeChat.Api;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,6 +9,11 @@ namespace Dai.WeChat.TestWeb.Controllers
 {
     public class TestController : Controller
     {
+
+        string appId = "wxb43ab71368baff54";
+
+        string appSecret = "8148081e1e0307789026db4f63ce40fb";
+
         // GET: Test
         public ActionResult CreateMenu()
         {
@@ -46,9 +52,22 @@ namespace Dai.WeChat.TestWeb.Controllers
                 Url = "http://openwx.cn"
             });
 
-            AccessToken accessToken = AccessToken.Get("wxb43ab71368baff54", "8148081e1e0307789026db4f63ce40fb");
+            AccessToken accessToken = AccessToken.Get(appId, appSecret);
 
             var response = WeiXinApiHelper.CreateMenu(accessToken.ToString(), menu);
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult GetUserList()
+        {
+
+
+            AccessToken accessToken = AccessToken.Get(appId, appSecret);
+
+            WeChatApiResponse state;
+
+            var response = WeiXinApiHelper.GetUserList(accessToken.ToString(), out state);
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
